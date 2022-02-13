@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <!-- Content here -->
+        <h1>新規登録画面</h1>
+        <form method="POST">
+            <label for="title">タイトル</label>
+            <input type="text" name="title">
+            <label for="url">url</label>
+            <input type="text" name="url">
+            <label for="body">内容</label>
+            <textarea name="body" cols="50" rows="10"></textarea>
+            <input class="btn btn-primary" type="submit" value="新規登録">
+        </form>
+    </div>
+{% endblock %}
