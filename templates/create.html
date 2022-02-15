@@ -4,12 +4,18 @@
         <!-- Content here -->
         <h1>新規登録画面</h1>
         <form method="POST">
-            <label for="title">タイトル</label>
-            <input type="text" name="title">
-            <label for="url">url</label>
-            <input type="text" name="url">
-            <label for="body">内容</label>
-            <textarea name="body" cols="50" rows="10"></textarea>
+            <div class="mb-3">
+                <label for="title" class="form-label">タイトル</label>
+                <input type="text" name="title" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label">URL</label>
+                <input type="text" name="url" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="body" class="form-label">プログラム</label>
+                <textarea name="body" class="form-control"></textarea>
+            </div>
             <input class="btn btn-primary" type="submit" value="新規登録">
         </form>
     </div>
