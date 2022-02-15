@@ -1,15 +1,23 @@
-{% extends "base.html" %}
+{% extends "bootstrap/base.html" %}
+{% block title %}編集ページ{% endblock %}
+
 {% block content %}
     <div class="container">
         <!-- Content here -->
         <h1>編集画面</h1>
         <form method="POST">
-            <label for="title" class="form-label">タイトル</label>
-            <input type="text" name="title" class="form-control" value={{ post.title }}>
-            <label for="url" class="form-label">URL</label>
-            <input type="text" name="url" class="form-control" value={{ post.url }}>
-            <label for="body" class="form-label">プログラム</label>
-            <textarea name="body" class="form-control" cols="100" rows="20" value={{ post.body }}></textarea>
+            <div class="mb-3">
+                <label for="title" class="form-label">タイトル</label>
+                <input type="text" name="title" class="form-control" value={{ post.title }}>
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label">URL</label>
+                <input type="text" name="url" class="form-control" value={{ post.url }}>
+            </div>
+            <div class="mb-3">
+                <label for="body" class="form-label">プログラム</label>
+                <textarea name="body" class="form-control" cols="200" rows="50" value={{ post.body }}></textarea>
+            </div>
             <input class="btn btn-primary" type="submit" value="更新">
         </form>
     </div>
