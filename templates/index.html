@@ -9,13 +9,13 @@
             <h2>{{ post.title }}</h2>
             <a class="btn btn-primary" href="/{{post.id}}/update" role="button">編集</a>
             <a class="btn btn-primary" href="/{{post.id}}/delete" role="button">削除</a>
-            <span class="border border-dark border-2"><p>URL : {{ post.url }}</p></span>
-            <span class="border border-dark border-2"><p>作成日時 : {{ post.created_at }}</p></span>
-            <span class="border border-dark border-2"><pre>
-                <code>
-                    <p>{{ post.body }}</p>
-                </code>
-                </pre></span>
+            <p>URL : {{ post.url }}</p>
+            <p>作成日時 : {{ post.created_at }}</p>
+            <pre>
+            <code>
+                <p>{{ post.body }}</p>
+            </code>
+            </pre>
         </article>
         {% endfor %}
     </div>
