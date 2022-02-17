@@ -36,7 +36,7 @@ class User(UserMixin, db.Model): #データベース定義
 def load_user(user_id): #セッション情報取得
     return User.query.get(int(user_id))
 
-@app.route("/home", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 @login_required #デコレータ追加
 def index():
     if request.method == "GET":
@@ -55,9 +55,9 @@ def signup():
 
         db.session.add(user) #データベースに追加
         db.session.commit() #コミットしないと追加、保存されない
-        return redirect("/") #ログイン画面へリダイレクト
+        return redirect("/login") #ログイン画面へリダイレクト
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template("login.html")
@@ -68,13 +68,13 @@ def login():
         user = User.query.filter_by(user_name=user_name).first() #ユーザ名を取ってくる
         if check_password_hash(user.password, password): #パスワードハッシュがあっている場合
             login_user(user) #userにログイン
-            return redirect("/home") #初期画面へリダイレクト
+            return redirect("/") #初期画面へリダイレクト
 
 @app.route("/logout")
 @login_required #デコレータ追加
 def logout():
     logout_user()
-    return redirect("/")
+    return redirect("/login")
 
 @app.route("/create", methods=["GET", "POST"])
 @login_required #デコレータ追加
@@ -90,7 +90,7 @@ def create():
 
         db.session.add(post) #データベースに追加
         db.session.commit() #コミットしないと追加、保存されない
-        return redirect("/home") #初期画面へリダイレクト
+        return redirect("/") #初期画面へリダイレクト
 
 @app.route("/<int:id>/update", methods=["GET", "POST"])
 @login_required #デコレータ追加
@@ -104,7 +104,7 @@ def update(id): #post.idがidに入る
         post.body = request.form.get("body")
 
         db.session.commit() #更新するときはコミットのみでOK
-        return redirect("/home") #初期画面へリダイレクト
+        return redirect("/") #初期画面へリダイレクト
 
 @app.route("/<int:id>/delete", methods=["GET"])
 @login_required #デコレータ追加
@@ -113,4 +113,4 @@ def delete(id): #post.idがidに入る
     
     db.session.delete(post) #データベースのデータを削除
     db.session.commit()
-    return redirect("/home") #初期画面へリダイレクト
+    return redirect("/") #初期画面へリダイレクト
