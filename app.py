@@ -70,12 +70,11 @@ def login():
             login_user(user) #userにログイン
             return redirect("/home") #初期画面へリダイレクト
 
-@app.route("/logout", methods=["GET"])
+@app.route("/logout")
 @login_required #デコレータ追加
 def logout():
-    if request.method == "GET":
-        logout_user()
-        return redirect("/")
+    logout_user()
+    return redirect("/")
 
 @app.route("/create", methods=["GET", "POST"])
 @login_required #デコレータ追加
