@@ -65,7 +65,7 @@ def login():
         user_name = request.form.get("user_name") #formでPOSTされたデータを取得
         password = request.form.get("password")
 
-        user = User.query.filer_by(user_name=user_name).first() #ユーザ名を取ってくる
+        user = User.query.filter_by(user_name=user_name).first() #ユーザ名を取ってくる
         if check_password_hash(user.password, password): #パスワードハッシュがあっている場合
             login_user(user) #userにログイン
             return redirect("/home") #初期画面へリダイレクト
