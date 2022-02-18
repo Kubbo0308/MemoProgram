@@ -1,7 +1,8 @@
 from crypt import methods
 from email.policy import default
+from enum import unique
 from flask import Flask
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user
 from flask_bootstrap import Bootstrap
@@ -29,7 +30,7 @@ class Post(db.Model): #データベース定義
 
 class User(UserMixin, db.Model): #データベース定義
     id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(20), nullable=False)
+    user_name = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(30))
 
 @login_manager.user_loader
@@ -41,7 +42,7 @@ def load_user(user_id): #セッション情報取得
 def index():
     if request.method == "GET":
         posts = Post.query.all() #Post内の全てのデータをリスト形式で取得
-        return render_template("index.html", posts=posts)
+    return render_template("index.html", posts=posts)
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -65,16 +66,21 @@ def login():
         user_name = request.form.get("user_name") #formでPOSTされたデータを取得
         password = request.form.get("password")
 
+        if (user_name == None) or (password == None):
+            return redirect(url_for('login'))
+        else:
+            return redirect(url_for('index'))
+
         user = User.query.filter_by(user_name=user_name).first() #ユーザ名を取ってくる
         if check_password_hash(user.password, password): #パスワードハッシュがあっている場合
             login_user(user) #userにログイン
-            return redirect("/") #初期画面へリダイレクト
+            return redirect(url_for('index')) #初期画面へリダイレクト
 
 @app.route("/logout")
 @login_required #デコレータ追加
 def logout():
     logout_user()
-    return redirect("/login")
+    return redirect(url_for('login'))
 
 @app.route("/create", methods=["GET", "POST"])
 @login_required #デコレータ追加
@@ -90,7 +96,7 @@ def create():
 
         db.session.add(post) #データベースに追加
         db.session.commit() #コミットしないと追加、保存されない
-        return redirect("/") #初期画面へリダイレクト
+        return redirect(url_for('index')) #初期画面へリダイレクト
 
 @app.route("/<int:id>/update", methods=["GET", "POST"])
 @login_required #デコレータ追加
@@ -104,7 +110,7 @@ def update(id): #post.idがidに入る
         post.body = request.form.get("body")
 
         db.session.commit() #更新するときはコミットのみでOK
-        return redirect("/") #初期画面へリダイレクト
+        return redirect(url_for('index')) #初期画面へリダイレクト
 
 @app.route("/<int:id>/delete", methods=["GET"])
 @login_required #デコレータ追加
@@ -113,4 +119,4 @@ def delete(id): #post.idがidに入る
     
     db.session.delete(post) #データベースのデータを削除
     db.session.commit()
-    return redirect("/") #初期画面へリダイレクト
+    return redirect(url_for('index')) #初期画面へリダイレクト
