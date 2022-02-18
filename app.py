@@ -71,12 +71,10 @@ def login():
         if (user_name == None) or (password == None):
             return redirect('/login')
         else:
-            return redirect('/')
-
-        user = User.query.filter_by(user_name=user_name).first() #ユーザ名を取ってくる
-        if check_password_hash(user.password, password): #パスワードハッシュがあっている場合
-            login_user(user) #userにログイン
-            return redirect("/") #初期画面へリダイレクト
+            user = User.query.filter_by(user_name=user_name).first() #ユーザ名を取ってくる
+            if check_password_hash(user.password, password): #パスワードハッシュがあっている場合
+                login_user(user) #userにログイン
+                return redirect("/") #初期画面へリダイレクト
 
 @app.route("/logout")
 @login_required #デコレータ追加
