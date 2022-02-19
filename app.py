@@ -40,6 +40,7 @@ def load_user(user_id): #セッション情報取得
 
 
 @app.route("/", methods=["GET", "POST"])
+@login_required #デコレータ追加
 def index():
     if request.method == "GET":
         posts = Post.query.all() #Post内の全てのデータをリスト形式で取得
