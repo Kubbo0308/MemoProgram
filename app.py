@@ -120,3 +120,4 @@ def delete(id): #post.idがidに入る
     db.session.delete(post) #データベースのデータを削除
     db.session.commit()
     return redirect("/") #初期画面へリダイレクト
+
