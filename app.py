@@ -2,7 +2,7 @@ from crypt import methods
 from email.policy import default
 from enum import unique
 from flask import Flask
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user
 from flask_bootstrap import Bootstrap
@@ -40,7 +40,6 @@ def load_user(user_id): #セッション情報取得
 
 
 @app.route("/", methods=["GET", "POST"])
-@login_required #デコレータ追加
 def index():
     if request.method == "GET":
         posts = Post.query.all() #Post内の全てのデータをリスト形式で取得
