@@ -31,7 +31,7 @@ class Post(db.Model): #データベース定義
 class User(UserMixin, db.Model): #データベース定義
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(20), nullable=False, unique=True)
-    password = db.Column(db.String(30))
+    password = db.Column(db.String(30), nullable=False)
 
 @login_manager.user_loader
 def load_user(user_id): #セッション情報取得
