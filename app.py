@@ -40,7 +40,7 @@ def load_user(user_id): #セッション情報取得
 
 
 @app.route("/", methods=["GET", "POST"])
-#@login_required #デコレータ追加
+@login_required #デコレータ追加
 def index():
     if request.method == "GET":
         posts = Post.query.all() #Post内の全てのデータをリスト形式で取得
@@ -77,13 +77,13 @@ def login():
                 return redirect("/") #初期画面へリダイレクト
 
 @app.route("/logout")
-#@login_required #デコレータ追加
+@login_required #デコレータ追加
 def logout():
     logout_user()
     return redirect("/login")
 
 @app.route("/create", methods=["GET", "POST"])
-#@login_required #デコレータ追加
+@login_required #デコレータ追加
 def create():
     if request.method == "GET":
         return render_template("create.html")
@@ -99,7 +99,7 @@ def create():
         return redirect("/") #初期画面へリダイレクト
 
 @app.route("/<int:id>/update", methods=["GET", "POST"])
-#@login_required #デコレータ追加
+@login_required #デコレータ追加
 def update(id): #post.idがidに入る
     post = Post.query.get(id) #Post内の特定のデータをリスト形式で取得
     if request.method == "GET":
@@ -113,7 +113,7 @@ def update(id): #post.idがidに入る
         return redirect("/") #初期画面へリダイレクト
 
 @app.route("/<int:id>/delete", methods=["GET"])
-#@login_required #デコレータ追加
+@login_required #デコレータ追加
 def delete(id): #post.idがidに入る
     post = Post.query.get(id) #Post内の特定のデータをリスト形式で取得
     
