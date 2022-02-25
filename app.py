@@ -13,7 +13,7 @@ import os
 import pytz
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///memo.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://riiolvjtysopxl:f9bb39a47101c1b889a0c2e12dd2002c4c8fad701ad95135b59b0c806c966bd0@ec2-18-215-8-186.compute-1.amazonaws.com:5432/d4kdjqkbg694bp'
 app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
