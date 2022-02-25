@@ -13,7 +13,8 @@ import os
 import pytz
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or "postgresql://localhost/flaskmemo"
+db_uri = os.environ.get('DATABASE_URL') or "postgresql://localhost/flaskmemo"
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
