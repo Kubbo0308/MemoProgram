@@ -10,10 +10,13 @@ from flask_bootstrap import Bootstrap
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
+import re
 import pytz
 
 app = Flask(__name__)
 db_uri = os.environ.get('DATABASE_URL') or "postgresql://localhost/flaskmemo"
+if db_uri and db_uri.startswith("postgres://"):
+    db_uri = db_uri.replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
