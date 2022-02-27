@@ -11,7 +11,7 @@
             <h2>{{ post.title }}</h2>
             <a class="btn btn-primary" href="/{{post.id}}/update" role="button">編集</a>
             <a class="btn btn-primary" href="/{{post.id}}/delete" role="button">削除</a>
-            <p>URL : {{ post.url }}</p>
+            <p>URL : <a href="{{ post.url }}"></a>{{ post.url }}</p>
             <p>作成日時 : {{ post.created_at }}</p>
             <pre>
             <code>
