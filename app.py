@@ -18,12 +18,12 @@ db_uri = os.environ.get('DATABASE_URL') or "postgresql://localhost/flaskmemo"
 if db_uri and db_uri.startswith("postgres://"):
     db_uri = db_uri.replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-app.config['SECRET_KEY'] = os.urandom(24)
+#app.config['SECRET_KEY'] = os.urandom(24)
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
+#login_manager = LoginManager()
+#login_manager.init_app(app)
 
 class Post(db.Model): #データベース定義
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +31,7 @@ class Post(db.Model): #データベース定義
     url = db.Column(db.String(100), nullable=True)
     body = db.Column(db.String(500), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(pytz.timezone('Asia/Tokyo')))
-
+'''
 class User(UserMixin, db.Model): #データベース定義
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(20), nullable=False, unique=True)
@@ -40,16 +40,16 @@ class User(UserMixin, db.Model): #データベース定義
 @login_manager.user_loader
 def load_user(user_id): #セッション情報取得
     return User.query.get(int(user_id))
-
-
+'''
 
 @app.route("/", methods=["GET", "POST"])
-@login_required #デコレータ追加
+#@login_required #デコレータ追加
 def index():
     if request.method == "GET":
         posts = Post.query.all() #Post内の全てのデータをリスト形式で取得
     return render_template("index.html", posts=posts)
 
+'''
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "GET":
@@ -85,9 +85,10 @@ def login():
 def logout():
     logout_user()
     return redirect("/login")
+'''
 
 @app.route("/create", methods=["GET", "POST"])
-@login_required #デコレータ追加
+#@login_required #デコレータ追加
 def create():
     if request.method == "GET":
         return render_template("create.html")
@@ -103,7 +104,7 @@ def create():
         return redirect("/") #初期画面へリダイレクト
 
 @app.route("/<int:id>/update", methods=["GET", "POST"])
-@login_required #デコレータ追加
+#@login_required #デコレータ追加
 def update(id): #post.idがidに入る
     post = Post.query.get(id) #Post内の特定のデータをリスト形式で取得
     if request.method == "GET":
@@ -117,7 +118,7 @@ def update(id): #post.idがidに入る
         return redirect("/") #初期画面へリダイレクト
 
 @app.route("/<int:id>/delete", methods=["GET"])
-@login_required #デコレータ追加
+#@login_required #デコレータ追加
 def delete(id): #post.idがidに入る
     post = Post.query.get(id) #Post内の特定のデータをリスト形式で取得
     
